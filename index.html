@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebbGames</title>
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+    <div id="loader" class="loader">
+        <div class="spinner"></div>
+        <p>Loading WebbGames...</p>
+    </div>
+    <canvas id="spaceCanvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;"></canvas>
+    <div class="container">
+        <h1>WebbGames</h1>
+        <p class="intro-text">Dive into a universe of thrilling online games. Ready to launch?</p>
+        <button class="launcher-btn" id="launcherBtn">Enter the Launcher</button>
+    </div>
+    <div id="transitionOverlay"></div>
+
+
+    <script src="scripts/background.js"></script>
+    <script>
+        window.addEventListener('load', function() {
+            const loader = document.getElementById('loader');
+            loader.style.display = 'none';
+        });
+
+        document.getElementById('launcherBtn').addEventListener('click', function() {
+            // Request fullscreen mode
+            if (document.documentElement.requestFullscreen) {
+                document.documentElement.requestFullscreen();
+            } else if (document.documentElement.mozRequestFullScreen) { // Firefox
+                document.documentElement.mozRequestFullScreen();
+            } else if (document.documentElement.webkitRequestFullscreen) { // Chrome, Safari and Opera
+                document.documentElement.webkitRequestFullscreen();
+            } else if (document.documentElement.msRequestFullscreen) { // IE/Edge
+                document.documentElement.msRequestFullscreen();
+            }
+            
+            const overlay = document.getElementById('transitionOverlay');
+            overlay.style.display = 'block';
+            overlay.classList.add('transition-white');
+            setTimeout(function() {
+                overlay.classList.remove('transition-white');
+                overlay.classList.add('transition-black');
+                setTimeout(function() {
+                    window.location.href = '#';
+                }, 500);
+            }, 500);
+        });
+
+
+    </script>
+
+</body>
+
+</html>
