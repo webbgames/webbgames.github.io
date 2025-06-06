@@ -21,37 +21,30 @@
 
 
     <script src="scripts/background.js"></script>
+    <script src="scripts/fullscreen-manager.js"></script>
     <script>
         window.addEventListener('load', function() {
             const loader = document.getElementById('loader');
             loader.style.display = 'none';
         });
 
-        document.getElementById('launcherBtn').addEventListener('click', function() {
-            // Request fullscreen mode
-            if (document.documentElement.requestFullscreen) {
-                document.documentElement.requestFullscreen();
-            } else if (document.documentElement.mozRequestFullScreen) { // Firefox
-                document.documentElement.mozRequestFullScreen();
-            } else if (document.documentElement.webkitRequestFullscreen) { // Chrome, Safari and Opera
-                document.documentElement.webkitRequestFullscreen();
-            } else if (document.documentElement.msRequestFullscreen) { // IE/Edge
-                document.documentElement.msRequestFullscreen();
-            }
+        document.getElementById('launcherBtn').addEventListener('click', async function() {
+            // Request fullscreen mode using the fullscreen manager
+            const fullscreenSuccess = await window.fullscreenManager.requestFullscreen();
             
             const overlay = document.getElementById('transitionOverlay');
             overlay.style.display = 'block';
             overlay.classList.add('transition-white');
+            
             setTimeout(function() {
                 overlay.classList.remove('transition-white');
                 overlay.classList.add('transition-black');
                 setTimeout(function() {
-                    window.location.href = 'https://webbgames.github.io/launcher/';
+                    // Use the fullscreen manager to navigate while preserving fullscreen intent
+                    window.fullscreenManager.navigateWithFullscreen('https://webbgames.github.io/launcher/');
                 }, 500);
             }, 500);
         });
-
-
     </script>
 
 </body>

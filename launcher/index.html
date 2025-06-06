@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebbGames Launcher</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <style>
+        .launcher-container {
+            text-align: center;
+            z-index: 1;
+            padding: 40px;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 15px;
+            animation: fadeIn 2s ease-out;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .game-card {
+            background: rgba(255, 0, 0, 0.1);
+            border: 2px solid #ff0000;
+            border-radius: 10px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .game-card:hover {
+            background: rgba(255, 0, 0, 0.2);
+            transform: scale(1.05);
+        }
+        
+        .fullscreen-status {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        .exit-fullscreen-btn {
+            background-color: #cc0000;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 20px;
+            transition: background-color 0.2s;
+        }
+        
+        .exit-fullscreen-btn:hover {
+            background-color: #990000;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="spaceCanvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;"></canvas>
+    
+    <div class="fullscreen-status" id="fullscreenStatus">
+        Fullscreen: <span id="fullscreenIndicator">Checking...</span>
+    </div>
+    
+    <div class="launcher-container">
+        <h1>WebbGames Launcher</h1>
+        <p class="intro-text">Welcome to the game launcher! Fullscreen mode should be preserved.</p>
+        
+        <div class="game-grid">
+            <div class="game-card">
+                <h3>Space Adventure</h3>
+                <p>Explore the cosmos</p>
+            </div>
+            <div class="game-card">
+                <h3>Puzzle Master</h3>
+                <p>Challenge your mind</p>
+            </div>
+            <div class="game-card">
+                <h3>Racing Thunder</h3>
+                <p>Speed and adrenaline</p>
+            </div>
+            <div class="game-card">
+                <h3>Strategy Empire</h3>
+                <p>Build your kingdom</p>
+            </div>
+        </div>
+        
+        <button class="exit-fullscreen-btn" id="exitFullscreenBtn">Exit Fullscreen</button>
+        <br>
+        <button class="launcher-btn" id="backBtn" style="margin-top: 10px;">Back to Home</button>
+    </div>
+
+    <script src="../scripts/background.js"></script>
+    <script src="../scripts/fullscreen-manager.js"></script>
+    <script>
+        // Update fullscreen status indicator
+        function updateFullscreenStatus() {
+            const indicator = document.getElementById('fullscreenIndicator');
+            const isFullscreen = window.fullscreenManager.isCurrentlyFullscreen();
+            indicator.textContent = isFullscreen ? 'Active' : 'Inactive';
+            indicator.style.color = isFullscreen ? '#00ff00' : '#ff0000';
+        }
+
+        // Update status on load and periodically
+        window.addEventListener('load', function() {
+            updateFullscreenStatus();
+            setInterval(updateFullscreenStatus, 1000);
+        });
+
+        // Exit fullscreen button
+        document.getElementById('exitFullscreenBtn').addEventListener('click', function() {
+            window.fullscreenManager.exitFullscreen();
+        });
+
+        // Back to home button
+        document.getElementById('backBtn').addEventListener('click', function() {
+            window.fullscreenManager.navigateWithFullscreen('../index.html');
+        });
+
+        // Listen for fullscreen changes
+        document.addEventListener('fullscreenchange', updateFullscreenStatus);
+        document.addEventListener('webkitfullscreenchange', updateFullscreenStatus);
+        document.addEventListener('mozfullscreenchange', updateFullscreenStatus);
+        document.addEventListener('MSFullscreenChange', updateFullscreenStatus);
+    </script>
+
+</body>
+</html>

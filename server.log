@@ -1,0 +1,4 @@
+127.0.0.1 - - [06/Jun/2025 14:58:59] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [06/Jun/2025 14:58:59] "GET /styles/main.css HTTP/1.1" 200 -
+127.0.0.1 - - [06/Jun/2025 14:58:59] "GET /scripts/fullscreen-manager.js HTTP/1.1" 200 -
+127.0.0.1 - - [06/Jun/2025 14:58:59] "GET /scripts/background.js HTTP/1.1" 200 -
